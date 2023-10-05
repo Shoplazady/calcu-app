@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form method="POST" action="/calculate">
+        <input type="number" name="num1" required>
+        <select name="operation" required>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="number" name="num2" required>
+        <input type="submit" value="Calculate">
+    </form>
+    <p id="result"></p> <!-- Result placeholder -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("form").submit(function(event) {
+            event.preventDefault();
+            $.post("/calculate", $(this).serialize(), function(data) {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    $("#result").text("Result: " + data.result);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

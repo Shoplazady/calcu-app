@@ -1,23 +1,21 @@
+# Use an official Python runtime as the base image
 FROM python:3.7.3-stretch
 
-# Maintainer info
-LABEL maintainer="erickson_ruaroii@dlsu.edu.ph"
-
 # Make working directories
-RUN  mkdir -p  /food-vision-api
-WORKDIR  /food-vision-api
+RUN mkdir -p /calculator
+WORKDIR /calculator
 
 # Upgrade pip with no cache
 RUN pip install --no-cache-dir -U pip
 
-# Copy application requirements file to the created working directory
-COPY requirements.txt .
-
-# Install application dependencies from the requirements file
-RUN pip install -r requirements.txt
-
 # Copy every file in the source folder to the created working directory
-COPY  . .
+COPY . .
 
-# Run the python application
+# Install Flask
+RUN pip install Flask
+
+# Expose a port for the Flask app
+EXPOSE 5000
+
+# Run the Flask application
 CMD ["python", "main.py"]
